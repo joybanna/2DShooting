@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallFix : MonoBehaviour {
+public class BallFix : MonoBehaviour
+{
     public Rigidbody2D rb;
     public Rigidbody2D hook;
     public GameObject nextBall;
     public static int point = 4;
     public static int Score = 0;
-    public  int numcatch = 0;
+    public int numcatch = 0;
     public float maxDragDistance = 2f;
     private bool isPressed = false;
-    public AudioClip player1, player2,Block;
+    public AudioClip player1, player2, Block;
     AudioSource audioSource;
 
-    // Use this for initialization
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -34,7 +34,7 @@ public class BallFix : MonoBehaviour {
                 rb.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             }
         }
-        
+
         Debug.Log(BallFix.point);
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -66,12 +66,13 @@ public class BallFix : MonoBehaviour {
         GetComponent<SpringJoint2D>().enabled = false;
         this.enabled = false;
         yield return new WaitForSeconds(2f);
-        if (BallFix.point != 0) {
+        if (BallFix.point != 0)
+        {
             if (nextBall != null)
             {
                 nextBall.SetActive(true);
             }
-            
+
         }
         else
         {
@@ -85,7 +86,7 @@ public class BallFix : MonoBehaviour {
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(2);
     }
-    
+
 
 
 }

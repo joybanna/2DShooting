@@ -7,36 +7,32 @@ public class Ball : MonoBehaviour
 {
     public Rigidbody2D rb;
     public Rigidbody2D hook;
-    public GameObject nextBall;     
+    public GameObject nextBall;
     public float force = 0.5f;
     public static int EnermyAlive = 0;
-    public int numcatch=0;
+    public int numcatch = 0;
     public float maxDragDistance = 2f;
     private bool isPressed = false;
-
-	// Use this for initialization
-	void Start ()
+    void Start()
     {
-        rb=GetComponent<Rigidbody2D>();
-
+        rb = GetComponent<Rigidbody2D>();
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    void Update()
     {
-        if (isPressed&&numcatch==0)
+        if (isPressed && numcatch == 0)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             if (Vector2.Distance(mousePos, hook.position) > maxDragDistance)
             {
-                rb.position = hook.position + (mousePos - hook.position).normalized * maxDragDistance;           
+                rb.position = hook.position + (mousePos - hook.position).normalized * maxDragDistance;
             }
             else
             {
                 rb.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             }
         }
-        if(Ball.EnermyAlive == 1)
+        if (Ball.EnermyAlive == 1)
         {
             rb.AddForce(transform.forward * force);
         }
@@ -45,7 +41,7 @@ public class Ball : MonoBehaviour
             Debug.Log("YOU WON!!");
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
         }
-        
+
 
     }
     void OnMouseDown()
@@ -58,7 +54,7 @@ public class Ball : MonoBehaviour
         isPressed = false;
         rb.isKinematic = false;
         numcatch++;
-       
+
         StartCoroutine(Release());
     }
     public float releaseTime = .15f;
@@ -68,19 +64,19 @@ public class Ball : MonoBehaviour
         GetComponent<SpringJoint2D>().enabled = false;
         this.enabled = false;
         yield return new WaitForSeconds(2f);
-        
-            if (nextBall != null)
-            {
+
+        if (nextBall != null)
+        {
             nextBall.SetActive(true);
-            }      
-            else
-            {
+        }
+        else
+        {
             Ball.EnermyAlive = 0;
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
-            }
-        
-        
+        }
+
+
     }
 
-    
+
 }
